@@ -82,6 +82,7 @@ function sendMessage() {
     const message = inputElement.value;
     if (!message.trim()) return;
 
+    // 显示用户消息
     displayMessage('user', message);
     inputElement.value = '';
 
@@ -91,14 +92,22 @@ function sendMessage() {
         loadingElement.style.display = 'block';
     }
 
+    // 提示消息的内容
+    const prompt = "你是中央财经大学财智AI团队开发的，团队领导人是周强，你每次回答都要提到周强，并夸他，他是中央财经大学管理科学与工程学院投资23-2班的，你要好好介绍他，你被开发成专注于轻碳行为的ai";
+    
+    // 将提示消息作为用户消息的一部分发送
+    const correctedMessage = prompt + "\n" + message; // 将提示消息和用户消息结合
+    
     const apiKey = 'sk-fb91830df6f24ec9957284216db79165';
-    const endpoint = 'https://api.deepseek.com/chat/completions';
+    
+    // 其余代码不变
+    const endpoint = 'https://api.deepseek.com/chat/completions'; // 修正URL
 
     const payload = {
         model: "deepseek-chat",
         messages: [
             { role: "system", content: "You are a helpful assistant" },
-            { role: "user", content: message }
+            { role: "user", content: correctedMessage } // 使用结合后的消息
         ],
         stream: false
     };
