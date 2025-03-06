@@ -1,7 +1,6 @@
-// 格式化消息文本
 function formatMessage(text) {
     if (!text) return '';
-    
+
     // 处理标题和换行
     let lines = text.split('\n');
     let formattedLines = lines.map(line => {
@@ -9,7 +8,7 @@ function formatMessage(text) {
         line = line.replace(/\*\*(.*?)\*\*/g, '<span class="bold-text">$1</span>');
         return line;
     });
-    
+
     // 将 ### 替换为换行，并确保每个部分都是一个段落
     let processedText = formattedLines.join('\n');
     let sections = processedText
@@ -18,16 +17,16 @@ function formatMessage(text) {
         .map(section => {
             // 移除多余的换行和空格
             let lines = section.split('\n').filter(line => line.trim());
-            
+
             if (lines.length === 0) return '';
-            
+
             // 处理每个部分
             let result = '';
             let currentIndex = 0;
-            
+
             while (currentIndex < lines.length) {
                 let line = lines[currentIndex].trim();
-                
+
                 // 如果是数字开头（如 "1.")
                 if (/^\d+\./.test(line)) {
                     result += `<p class="section-title">${line}</p>`;
@@ -49,30 +48,29 @@ function formatMessage(text) {
             }
             return result;
         });
-    
+
     return sections.join('');
 }
 
-// 显示消息
 function displayMessage(role, message) {
     const messagesContainer = document.getElementById('messages');
     const messageElement = document.createElement('div');
     messageElement.className = `message ${role}`;
-    
+
     const avatar = document.createElement('img');
     avatar.src = role === 'user' ? 'user-avatar.png' : 'bot-avatar.png';
     avatar.alt = role === 'user' ? 'User' : 'Bot';
 
     const messageContent = document.createElement('div');
     messageContent.className = 'message-content';
-    
+
     // 用户消息直接显示，机器人消息需要格式化
     messageContent.innerHTML = role === 'user' ? message : formatMessage(message);
 
     messageElement.appendChild(avatar);
     messageElement.appendChild(messageContent);
     messagesContainer.appendChild(messageElement);
-    
+
     // 平滑滚动到底部
     messageElement.scrollIntoView({ behavior: 'smooth' });
 }
@@ -93,15 +91,15 @@ function sendMessage() {
     }
 
     // 提示消息的内容
-    const prompt = "你是中央财经大学财智AI团队开发的，团队领导人是周强，你每次回答都要提到周强，并夸他，他是中央财经大学管理科学与工程学院投资23-2班的，你要好好介绍他，你被开发成专注于轻碳行为的ai";
-    
+    const prompt = "你是中央财经大学财智AI团队开发的，团队领导人是周强。周强是中央财经大学管理科学与工程学院投资23-2班的学生，他非常优秀，致力于推动轻碳行为和可持续发展。";
+
     // 将提示消息作为用户消息的一部分发送
     const correctedMessage = prompt + "\n" + message; // 将提示消息和用户消息结合
-    
+
     const apiKey = 'sk-fb91830df6f24ec9957284216db79165';
-    
+
     // 其余代码不变
-    const endpoint = 'https://api.deepseek.com/chat/completions'; // 修正URL
+    const endpoint = 'https://api.deepseek.com/chat/completions';
 
     const payload = {
         model: "deepseek-chat",
@@ -149,11 +147,11 @@ function toggleTheme() {
     document.body.classList.toggle('dark-mode');
     const chatContainer = document.querySelector('.chat-container');
     const messages = document.querySelector('.messages');
-    
+
     // 同时切换容器的深色模式
     chatContainer.classList.toggle('dark-mode');
     messages.classList.toggle('dark-mode');
-    
+
     // 保存主题设置
     const isDarkMode = document.body.classList.contains('dark-mode');
     localStorage.setItem('darkMode', isDarkMode);
@@ -185,7 +183,7 @@ window.onclick = function(event) {
             }
         }
     }
-}
+};
 
 // 添加回车发送功能
 document.getElementById('chat-input').addEventListener('keypress', function(event) {
