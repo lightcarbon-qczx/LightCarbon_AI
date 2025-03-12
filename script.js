@@ -96,7 +96,7 @@ function sendMessage() {
     // 将提示消息作为用户消息的一部分发送
     const correctedMessage = prompt + "\n" + message; // 将提示消息和用户消息结合
 
-    const apiKey = 'sk-358a56cafab94694be745e3f513f10e8;
+    const apiKey = 'sk-358a56cafab94694be745e3f513f10e8';
 
     // 其余代码不变
     const endpoint = 'https://api.deepseek.com/chat/completions';
